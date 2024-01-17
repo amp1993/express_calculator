@@ -1,59 +1,59 @@
 const express = require('express');
 const { validateNumsArray, findMode, findMean, findMedian } = require('./helpers');
-const ExpressError = require('./expressError')
+const ExpressError = require('./expressError');
  
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Mean
+// Average
 app.get('/mean/:nums', function(req, res, next) {
-  if(!req.query.nums){
-    throw new ExpressError()
+  if (!req.params.nums) {
+    throw new ExpressError();
   }
-  let numsArray = req.query.nums.split(',');
+  let numsArray = req.params.nums.split(',');
   let nums = validateNumsArray(numsArray);
-  if (nums instanceof Error){
+  if (nums instanceof Error) {
     throw new ExpressError(nums.message);
   }
   let result = {
-    operation : 'mean',
-    result: findMean(nums)
+    operation: 'mean',
+    result: findMean(nums),
   };
   return res.send(result);
 });
 
 // Median
 app.get('/median/:nums', function(req, res, next) {
-  if(!req.query.nums){
-    throw new ExpressError()
+  if (!req.params.nums) {
+    throw new ExpressError();
   }
-  let numsArray = req.query.nums.split(',');
+  let numsArray = req.params.nums.split(',');
   let nums = validateNumsArray(numsArray);
-  if (nums instanceof Error){
+  if (nums instanceof Error) {
     throw new ExpressError(nums.message);
   }
   let result = {
-    operation : 'median',
-    result: findMedian(nums)
+    operation: 'median',
+    result: findMedian(nums),
   };
   return res.send(result);
 });
 
-// Mode
+// Most Fequent
 app.get('/mode/:nums', function(req, res, next) {
-  if(!req.query.nums){
-    throw new ExpressError()
+  if (!req.params.nums) {
+    throw new ExpressError();
   }
-  let numsArray = req.query.nums.split(',');
+  let numsArray = req.params.nums.split(',');
   let nums = validateNumsArray(numsArray);
-  if (nums instanceof Error){
+  if (nums instanceof Error) {
     throw new ExpressError(nums.message);
   }
   let result = {
-    operation : 'mode',
-    result: findMode(nums)
+    operation: 'mode',
+    result: findMode(nums),
   };
   return res.send(result);
 });
